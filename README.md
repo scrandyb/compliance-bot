@@ -10,3 +10,9 @@ Detects compliance violations by sellers
 4. In the top-level project directory (i.e. the same dir where `.gitignore` lives), run `touch .env` in the CLI
 5. In the newly-created .env file, add the following line: `MVM_API_BEARER_TOKEN=your_bearer_token`, replacing `your_bearer_token` with your [MVM API Bearer Token](https://webkul.com/blog/shopify-multivendor-marketplace-app-api/) (To find tokens, in the MVM UI Admin view navigation bar, hover over three dots on the right of the navigation bar and click "Multivendor API")
 6. You are now ready to run the bot! Use `python3 epr_violation_bot.py`
+
+## TODOs
+
+* Add unit tests
+* [Dockerize](https://www.docker.com/blog/how-to-dockerize-your-python-applications/)
+* Test this code when there are a large number of stores (multiple pages)
