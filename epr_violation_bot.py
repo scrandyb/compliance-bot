@@ -5,7 +5,11 @@ import requests
 
 load_dotenv()
 
+
+# Environment vars. Bearer token must be specified. Field IDs must be overridden if using any marketplace other than scrandyb.myshopify.com
 MVM_API_BEARER_TOKEN = os.getenv("MVM_API_BEARER_TOKEN")
+FR_EPR_REG_NUMBER_CUSTOM_FIELD_ID = os.getenv("FR_EPR_REG_NUMBER_CUSTOM_FIELD_ID", "22305")
+DE_LUCID_REG_NUMBER_CUSTOM_FIELD_ID = os.getenv("DE_LUCID_REG_NUMBER_CUSTOM_FIELD_ID", "22316")
 
 
 MVM_API_BASE = "https://mvmapi.webkul.com/api/v2/"
@@ -174,10 +178,10 @@ def get_seller_batch(page_num, page_limit):
 		seller.id = seller_json["id"]
 		seller.shipping_details.ships_from_country = seller_json.get("id_country", {}).get("iso_code")
 		custom_fields = json.loads(seller_json.get("custom_fields", ""))
-		if custom_fields.get("22305", {}).get("value"):
-			seller.compliance_details.fr_epr_reg_number = custom_fields.get("22305", {}).get("value")
-		if custom_fields.get("22316", {}).get("value"):
-			seller.compliance_details.de_lucid_reg_number = custom_fields.get("22316", {}).get("value")
+		if custom_fields.get(FR_EPR_REG_NUMBER_CUSTOM_FIELD_ID, {}).get("value"):
+			seller.compliance_details.fr_epr_reg_number = custom_fields.get(FR_EPR_REG_NUMBER_CUSTOM_FIELD_ID, {}).get("value")
+		if custom_fields.get(DE_LUCID_REG_NUMBER_CUSTOM_FIELD_ID, {}).get("value"):
+			seller.compliance_details.de_lucid_reg_number = custom_fields.get(DE_LUCID_REG_NUMBER_CUSTOM_FIELD_ID, {}).get("value")
 		seller_batch.append(seller)
 	return seller_batch
 
