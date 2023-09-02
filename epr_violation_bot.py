@@ -155,6 +155,8 @@ def populate_seller_details(seller):
 	seller_shipping_range_url = SELLER_SHIPPING_RANGE_PRICE_URL.format(seller_id=seller.id)
 	r_shipping_details = requests.get(shipping_url, headers=AUTH_HEADERS)
 	r_shipping_details.raise_for_status()
+	if len(r_shipping_details.json()["shipping"]) == 0:
+		return
 	for shipping_id_json in r_shipping_details.json()["shipping"]["available_shipping"]:
 		seller_shipping_id = shipping_id_json["seller_shipping_id"]
 		seller.shipping_details.add_seller_shipping_id(seller_shipping_id)
@@ -228,7 +230,7 @@ def check_epr_compliance_for_all_sellers():
 		pass_or_fail = "PASS" if len(check_results['checks_failed']) == 0 else "FAIL"
 		print("Seller {} result: {}\nSuccessful tests: {}\nFailed tests: {}\n\n".format(
 			seller_id,
-			"PASS" if len(seller_check_results['checks_failed']) == 0 else "FAIL",
+			pass_or_fail,
 			check_results['checks_passed'],
 			check_results['checks_failed']
 		))
