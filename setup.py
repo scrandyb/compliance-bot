@@ -1,4 +1,8 @@
-import os
+"""Setup file for compliance bot repo. Use this to configure package
+
+For local development, run `python setup.py develop`
+"""
+
 from setuptools import setup
 
 setup(
